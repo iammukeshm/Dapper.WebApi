@@ -12,6 +12,6 @@ namespace Dapper.Infrastructure.Repository
         {
             Products = productRepository;
         }
-        public IProductRepository Products { get; } 
+        public IProductRepository Products { get; }
     }
 }

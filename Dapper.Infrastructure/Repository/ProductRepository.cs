@@ -13,7 +13,6 @@ namespace Dapper.Infrastructure.Repository
     public class ProductRepository : IProductRepository
     {
         private readonly IConfiguration configuration;
-
         public ProductRepository(IConfiguration configuration)
         {
             this.configuration = configuration;
@@ -22,7 +21,7 @@ namespace Dapper.Infrastructure.Repository
         {
             entity.AddedOn = DateTime.Now;
             var sql = "Insert into Products (Name,Description,Barcode,Rate,AddedOn) VALUES (@Name,@Description,@Barcode,@Rate,@AddedOn)";
-            using(var connection = new SqlConnection(configuration.GetConnectionString("DefaultConnection")))
+            using (var connection = new SqlConnection(configuration.GetConnectionString("DefaultConnection")))
             {
                 connection.Open();
                 var result = await connection.ExecuteAsync(sql, entity);
@@ -36,7 +35,7 @@ namespace Dapper.Infrastructure.Repository
             using (var connection = new SqlConnection(configuration.GetConnectionString("DefaultConnection")))
             {
                 connection.Open();
-                var result = await connection.ExecuteAsync(sql, new {Id = id });
+                var result = await connection.ExecuteAsync(sql, new { Id = id });
                 return result;
             }
         }
@@ -58,8 +57,8 @@ namespace Dapper.Infrastructure.Repository
             using (var connection = new SqlConnection(configuration.GetConnectionString("DefaultConnection")))
             {
                 connection.Open();
-                var result = await connection.QueryAsync<Product>(sql, new { Id = id });
-                return result.FirstOrDefault();
+                var result = await connection.QuerySingleOrDefaultAsync<Product>(sql, new { Id = id });
+                return result;
             }
         }
 
